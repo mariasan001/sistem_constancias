@@ -1,6 +1,187 @@
-/* añade a tu sidebar.module.css */
-.activeRail {
-  content: ""; position: absolute; left: -6px; top: 8px; bottom: 8px; width: 3px;
-  border-radius: 8px; background: transparent; transition: background .15s ease;
+/* ======= Variables de marca ======= */
+:root {
+  --panel-bg: #ffffff;
+  --ink: #1d1f23;
+  --muted: #7b8494;
+
+  --brand: #9F2141;         /* vino */
+  --brand-weak: #F9E7EC;
+  --brand-ring: #F2C9D4;
+
+  --danger: #E5484D;
+  --danger-weak: #FEE4E2;
+  --danger-ring: #F9C6C4;
+
+  --ring: #e7ecf7;
+  --shadow: 0 10px 30px rgba(16, 24, 40, .06);
 }
-.active .activeRail { background: var(--gold); }
+
+/* ======= Contenedor ======= */
+.aside {
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+  background: var(--panel-bg);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  margin: 8px;
+  padding: 10px 8px;
+  transition: width .18s ease;
+  overflow: visible;
+  z-index: 40;
+}
+
+.open   { width: 280px; }
+.closed { width: 76px; }
+
+/* ======= Header ======= */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 40px;
+}
+
+.toggle {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--ring);
+  background: #6a0537; /* vino oscuro */
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .06) inset;
+}
+.toggle svg { width: 18px; height: 18px; color: #ffffff; }
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand img { width: 28px; height: 28px; }
+.brandName { font-weight: 800; color: var(--ink); }
+.closed .brand img, .closed .brandName { display: none; }
+
+/* ======= Navegación ======= */
+.nav { flex: 1; overflow: auto; padding: 6px 4px; }
+.nav::-webkit-scrollbar       { width: 8px; }
+.nav::-webkit-scrollbar-thumb { background: #e6ebf4; border-radius: 999px; }
+
+/* ======= Item (base para todos, incl. Ajustes/Logout) ======= */
+.item{
+  position: relative;
+  display:flex; align-items:center; gap:12px;
+  padding:10px 10px; margin:0 6px 6px;
+  border-radius:12px;
+  font-size:15px; color:#2b3342;
+  background:transparent; border:1px solid transparent;
+  text-decoration:none; cursor:pointer;
+  transition: background .15s, color .15s, border-color .15s, transform .02s;
+}
+.item:hover { background:#f7f7f9; border-color:#ececf3; color:#1f2532; }
+
+.icon  { width:18px; height:18px; }
+.label { font-weight:500; }
+
+/* realce activo */
+.rail{
+  position:absolute; left:3px; top:7px; bottom:7px;
+  width:3px; border-radius:8px; background:transparent;
+  transition: background .15s ease;
+}
+.active .rail { background: var(--brand); }
+.active{
+  background: var(--brand-weak);
+  border-color: var(--brand-ring);
+  color:#5b0f22;
+}
+
+/* ======= Tooltips (solo en modo colapsado) ======= */
+.tooltip{
+  position: fixed;
+  top: var(--tip-top, 50%);
+  left: var(--tip-left, 100px);
+  transform: translateY(-50%);
+  background:#1f2937; color:#fff;
+  padding:8px 10px; font-size:12px; line-height:1;
+  border-radius:8px; white-space:nowrap;
+  opacity:0; pointer-events:none;
+  transition: opacity .12s ease; box-shadow:0 10px 20px rgba(0,0,0,.2);
+  z-index: 9999;
+}
+.closed .item:hover .tooltip { opacity: 1; }
+
+/* tooltip variante danger (logout) si la usas */
+.tooltipDanger { background:#000; }
+
+/* ======= Controles inferiores ======= */
+.controls{
+  display:flex; flex-direction:column; gap:8px;
+  padding:10px 4px 8px;
+}
+
+/* Logout con acento rojo */
+.itemDanger:hover{
+  background:var(--danger-weak);
+  border-color:var(--danger-ring);
+  color:#4b1a1b;
+}
+.iconDanger{ color:var(--danger); }
+
+/* ======= Submenú de Ajustes ======= */
+.gearWrap { position: relative; }
+
+/* Tarjeta anclada al engrane (posición se setea por inline style) */
+.menuPopup{
+  position: fixed;                 /* evita recortes y “saltos” */
+  min-width: 260px;
+  background:#fff;
+  border:1px solid var(--ring);
+  box-shadow:0 24px 60px rgba(0,0,0,.12);
+  border-radius:14px;
+  padding:10px;
+  z-index:9999;
+  animation: pop .12s ease both;
+}
+@keyframes pop{ from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:translateY(0)} }
+
+.menuItem{
+  width:100%;
+  display:flex; align-items:center; gap:12px;
+  border:0; border-radius:12px;
+  background:transparent; color:#2c3442;
+  text-decoration:none; padding:12px 12px;
+}
+.menuItem:hover{ background:#f6f8fb; }
+.menuItemSmall span{ font-size:13px; font-weight:600; color:#5c667c; }
+.menuItemBig   span{ font-size:16px; font-weight:800; color:#2b3342; }
+.miIcon{ width:18px; height:18px; color:#55607a; }
+
+/* ======= Perfil ======= */
+.profile{
+  display:flex; align-items:center; gap:10px;
+  margin:8px 6px; padding:10px;
+  border:1px solid var(--ring); border-radius:12px;
+  background:#f8fafc;
+}
+.avatar{ width:28px; height:28px; border-radius:999px; }
+.userMeta{ min-width:0; }
+.userName{ font-weight:900; color:#1c2430; }
+.userEmail{
+  font-size:12px; color:#7a8599;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+/* ======= Modo oscuro (opcional) ======= */
+:root.dark {
+  --panel-bg:#0f1217;
+  --ink:#f1f5f9;
+  --muted:#9aa4b2;
+  --ring:#222a36;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+:root.dark .aside { background: var(--panel-bg); }
+:root.dark .brandName, :root.dark .label, :root.dark .userName, :root.dark .item { color: var(--ink); }
+:root.dark .item:hover { background:#151a22; border-color:#1d2531; color:#e5e9f0; }
+:root.dark .nav::-webkit-scrollbar-thumb{ background:#1e2530; }
+:root.dark .profile{ background:#0c0f14; border-color:#1b2230; }
+:root.dark .tooltip{ background:#0b0f16; color:#e9eef6; }
+:root.dark .menuPopup{ background:#0f141b; border-color:#1a2230; }

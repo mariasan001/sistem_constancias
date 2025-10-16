@@ -1,77 +1,34 @@
 :root{
-  /* Tokens locales del dashboard (puedes moverlos a globals si quieres) */
-  --bg-cream: #FFF8EE;     /* fondo general */
-  --surface:  #FFFFFF;     /* tarjeta principal */
-  --ring:     #FFEBD2;     /* borde suave */
-  --shadow:   0 10px 30px rgba(0,0,0,.06);
-  --radius:   18px;
-  --gap:      10px;        /* margen exterior a la surface */
+  --bg-cream:#EEF1F4;
+  --surface:#ffffff;
+  --radius:16px;
 }
 
-/* Estructura general: rail (sidebar) + area de contenido */
 .shell{
-  display: grid;
-  grid-template-columns: 80px 1fr;   /* sidebar fijo + contenido fluido */
-  height: 100dvh;
-  background: var(--bg-cream);
-  position: relative;
-  z-index: auto;
+  display:grid;
+  grid-template-columns: auto 1fr; /* sidebar + contenido */
+  height:100dvh;
+  background:var(--bg-cream);
 }
 
-/* Contenedor principal del contenido (columna derecha) */
 .main{
-  height: 100%;
-  padding: var(--gap);
-  display: flex;
-  position: relative;
-  z-index: 1; /* debajo del sidebar, que tiene z-index mayor */
+  height:100%;
+  padding:10px;
+  display:flex;
 }
 
-/* Área scrollable donde viven tus páginas/secciones */
 .surface{
-  flex: 1;
-  height: 100%;
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: auto;           /* único scroll permitido */
-  padding: 20px;
-  position: relative;
-  z-index: 1;
+  flex:1;
+  height:100%;
+  background:var(--surface);
+  border-radius:var(--radius);
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
+  overflow:auto;
+  padding:20px;
 }
 
-/* ———————— Detalles UX ———————— */
-
-/* Scrollbar sutil (chromium/webkit) */
-.surface::-webkit-scrollbar{ width: 10px; height: 10px; }
-.surface::-webkit-scrollbar-thumb{
-  background: #e9e0d0;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-.surface::-webkit-scrollbar-thumb:hover{ background: #decfb4; }
-
-/* Soporte “reduce motion” */
-@media (prefers-reduced-motion: reduce){
-  .surface, .main, .shell{ scroll-behavior: auto; }
-}
-
-/* Responsive: sidebar más compacto en pantallas pequeñas */
 @media (max-width: 720px){
-  .shell{ grid-template-columns: 66px 1fr; }
-  .surface{ border-radius: 16px; padding: 14px; }
+  .shell{ grid-template-columns: 76px 1fr; }
+  .surface{ border-radius:14px; padding:14px; }
 }
 
-/* (Opcional) Dark mode suave si algún día lo activas */
-/*
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg-cream:#141414;
-    --surface:#1b1b1b;
-    --ring:#2a2a2a;
-    --shadow: 0 10px 30px rgba(0,0,0,.35);
-  }
-  .surface::-webkit-scrollbar-thumb{ background:#2a2a2a; }
-}
-*/
