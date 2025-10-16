@@ -1,0 +1,103 @@
+/* =============================================================
+src/app/login/login.module.css — puedes pegar tu CSS existente
+============================================================= */
+/* Usa tu CSS previo (el que compartiste). Siéntete libre de reemplazar este bloque por el tuyo. */
+.page {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f4f4;
+    padding: 24px
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    min-height: min(84vh, 760px);
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    background: #fff
+}
+
+.leftPanel {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 300px
+}
+
+.leftPanel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/img/fondo.png") center/cover no-repeat
+}
+
+.leftPanel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, .1) 0%, rgba(0, 0, 0, .35) 100%)
+}
+
+.leftContent {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    color: #fff;
+    max-width: 450px;
+    z-index: 1
+}
+
+.rightPanel {
+    flex: 1;
+    display: flex;
+    justify-content: center
+}
+
+.formWrap {
+    width: 100%;
+    max-width: 720px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+
+.logoBox {
+    text-align: right;
+    margin-bottom: 5rem
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 900;
+    margin: 0 0 06px;
+    padding: 0px !important;    
+}
+
+.subtitle {
+    font-size: .9rem;
+    color: #6e6e6e;
+
+}
+
+@media (max-width:1024px) {
+    .container {
+        flex-direction: column
+    }
+
+    .leftPanel {
+        height: 240px
+    }
+
+    .formWrap {
+        padding: 2rem;
+        max-width: 560px
+    }
+}
