@@ -204,3 +204,4 @@ export function withAuth<P extends object>(Comp: React.ComponentType<P>) {
   Wrapped.displayName = `withAuth(${Comp.displayName || Comp.name || 'Component'})`;
   return Wrapped;
 }
+

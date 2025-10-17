@@ -64,21 +64,7 @@ export default function Sidebar() {
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
-  // dark mode
-  const [dark, setDark] = useState(false);
-  useEffect(() => {
-    const isDark = typeof window !== 'undefined' && localStorage.getItem('ui:theme') === 'dark';
-    setDark(isDark);
-    document.documentElement.classList.toggle('dark', isDark);
-  }, []);
-  const toggleDark = useCallback(() => {
-    setDark((d) => {
-      const v = !d;
-      document.documentElement.classList.toggle('dark', v);
-      if (typeof window !== 'undefined') localStorage.setItem('ui:theme', v ? 'dark' : 'light');
-      return v;
-    });
-  }, []);
+
 
   const handleTipPos = (el: HTMLElement) => {
     const r = el.getBoundingClientRect();
@@ -124,37 +110,6 @@ export default function Sidebar() {
 
       {/* Controles inferiores */}
       <div className={s.controls}>
-        {/* Ajustes — mismo aspecto que cualquier item */}
-        <button
-          ref={gearRef}
-          className={s.item}
-          aria-label="Ajustes"
-          onClick={() => setShowMenu((v) => !v)}
-          onMouseEnter={(e) => handleTipPos(e.currentTarget)}
-        >
-          <span className={s.rail} aria-hidden />
-          <Cog className={s.icon} />
-          {hydrated && open && <span className={s.label}>Ajustes</span>}
-          {!open && <span className={s.tooltip}>Ajustes</span>}
-        </button>
-
-        {/* Submenú lindo y alineado al engrane */}
-        {showMenu && (
-          <div className={s.menuPopup} style={{ top: menuPos.top, left: menuPos.left }}>
-            <button className={`${s.menuItem} ${s.menuItemSmall}`} onClick={toggleDark}>
-              {dark ? <Sun className={s.miIcon} /> : <Moon className={s.miIcon} />}
-              <span>{dark ? 'Modo claro' : 'Modo oscuro'}</span>
-            </button>
-            <Link
-              href="/dashboard/configuracion/horarios"
-              className={`${s.menuItem} ${s.menuItemBig}`}
-              onClick={() => setShowMenu(false)}
-            >
-              <CalendarClock className={s.miIcon} />
-              <span>Configurar horarios</span>
-            </Link>
-          </div>
-        )}
 
         {/* Cerrar sesión */}
         <button
@@ -183,3 +138,4 @@ export default function Sidebar() {
     </aside>
   );
 }
+
