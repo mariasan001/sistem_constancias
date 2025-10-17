@@ -1,0 +1,51 @@
+/* Reusa tokens globales definidos en :root (asignaciones.module.css) */
+
+.wrap{
+  display:inline-flex; align-items:center; gap:4px;
+  width: 140px;               /* puedes ajustar a 120–160 */
+  height: 32px;
+  border:1px solid var(--border);
+  background: var(--bg);
+  border-radius:12px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.currency{
+  color: var(--text-soft);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.input{
+  border:0; outline:none;
+  width:100%;
+  background:transparent;
+  color: var(--text);
+  font-size: 12px;
+  text-align: right;
+}
+
+/* Placeholder y focus ring consistente */
+.input::placeholder{ color: var(--muted); }
+.wrap:focus-within{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(159,33,65,.10);
+}
+
+/* Disabled */
+.wrap:has(.input:disabled){
+  background:#f3f4f6;
+  color:#9ca3af;
+}
+
+/* Estados opcionales si los usas via data-attrs */
+.wrap[data-invalid="true"]{
+  border-color:#ef4444;
+  box-shadow:0 0 0 3px rgba(239,68,68,.12);
+}
+.wrap[data-valid="true"]{
+  border-color:#16a34a;
+  box-shadow:0 0 0 3px rgba(22,163,74,.12);
+}

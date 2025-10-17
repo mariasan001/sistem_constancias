@@ -1,0 +1,43 @@
+/* Reusa tokens globales en :root (asignaciones.module.css) */
+
+.input{
+  width: 160px;
+  height: 32px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 20px;
+  outline: none;
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+.input::placeholder{ color: var(--muted); }
+
+/* Focus ring coherente con el resto */
+.input:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(159,33,65,.10);
+}
+
+/* Disabled */
+.input:disabled{
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Estados opcionales si quieres marcar error/ok vía data-attrs */
+.input[data-invalid="true"]{
+  border-color:#ef4444;
+  box-shadow:0 0 0 3px rgba(239,68,68,.12);
+}
+.input[data-valid="true"]{
+  border-color:#16a34a;
+  box-shadow:0 0 0 3px rgba(22,163,74,.12);
+}
+
+/* Variante full-width si algún día la necesitas dentro de formularios */
+.input.full{ width: 100%; }

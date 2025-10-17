@@ -1,0 +1,43 @@
+/* src/app/(private)/dashboard/asignaciones/components/cells/StatusCell.module.css */
+
+/* Badge base (display y botón) */
+.badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px; height:32px;
+  border-radius:999px; font-weight:600; font-size:12px;
+  border:1px solid var(--border); background:var(--bg-soft); color:var(--text);
+  cursor: default; user-select: none;
+}
+.badge:where(button){ cursor:pointer; }
+.badge:where(button):hover{ border-color: var(--accent); box-shadow: 0 0 0 3px rgba(159,33,65,.08); }
+.badge:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(159,33,65,.14); }
+
+/* Puntito de color */
+.dot{
+  width:8px; height:8px; border-radius:999px; background: currentColor; display:inline-block;
+}
+
+/* Variantes por estatus */
+.badge[data-variant="recibido"]{
+  background:#e8f0ff; color:#1d4ed8; border-color:#c7d2fe;
+}
+.badge[data-variant="asignado"]{
+  background:#fff1d6; color:#b45309; border-color:#fde68a;
+}
+.badge[data-variant="en proceso"]{
+  background:#eef2ff; color:#3730a3; border-color:#c7d2fe;
+}
+.badge[data-variant="finalizado"]{
+  background:#dcfce7; color:#166534; border-color:#86efac;
+}
+.badge[data-variant="entregado por ventanilla"]{
+  background:#e0f2fe; color:#075985; border-color:#7dd3fc;
+}
+
+/* Select en modo edición */
+.select{
+  background:#fff; color:var(--text);
+  border:1px solid var(--border); border-radius:10px;
+  padding:6px 10px; font-size:12px; height:32px; max-width:240px;
+}
+.select:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(159,33,65,.12); }

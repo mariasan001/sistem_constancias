@@ -1,0 +1,65 @@
+/* Reusa tokens en :root (asignaciones.module.css): --border, --bg, --bg-soft, --text, --muted, --accent */
+
+.row{
+  display:flex; align-items:center; gap:10px;
+  min-height: 32px;
+  flex-wrap: wrap;
+}
+
+.hiddenFile{ display:none; }
+
+/* Botón “Subir” */
+.uploadBtn{
+  display:inline-flex; align-items:center; gap:8px;
+  height: 32px;
+  padding: 0 12px;
+  border:1px dashed var(--border);
+  border-radius:10px;
+  background:#fff;
+  font-size:12px; font-weight:700;
+  cursor:pointer;
+  transition: box-shadow .15s ease, border-color .15s ease, opacity .15s ease;
+}
+.uploadBtn:hover{ border-color: var(--accent); box-shadow: 0 0 0 3px rgba(159,33,65,.08); }
+.uploadBtn[aria-disabled="true"]{ opacity:.6; cursor:not-allowed; }
+
+.clip{
+  width:14px; height:14px; display:inline-block;
+  border:1.8px solid #475467; border-radius:3px;
+  transform:rotate(-45deg);
+  border-top-color:transparent; border-left-color:transparent;
+}
+
+/* Nombre del archivo */
+.fileName{
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #475467;
+  font-size: 12px;
+}
+
+/* Botones de acción */
+.linkBtn{
+  height: 28px;
+  padding: 0 10px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  font-size:12px; cursor:pointer;
+}
+.linkBtn:hover{ border-color: var(--accent); box-shadow: 0 0 0 3px rgba(159,33,65,.08); }
+
+/* Estados de subida */
+.uploadInfo{ margin-left:.25rem; font-size:.85rem; opacity:.8; }
+.uploadOk{   margin-left:.25rem; font-size:.85rem; color:#15803d; }
+.uploadErr{  margin-left:.25rem; font-size:.85rem; color:#b91c1c; }
+
+/* Utilidad */
+.muted{ color: var(--muted); font-size:12px; }
+
+/* Ajuste responsive */
+@media (max-width: 1024px){
+  .fileName{ max-width: 160px; }
+}

@@ -1,75 +1,118 @@
-.wrap {
-  display: flex;
-  flex-direction: column;
+/* src/app/(private)/dashboard/asignaciones/asignaciones.module.css */
+
+/* ===== Tokens locales (compatibles con los de table/cells) ===== */
+:root{
+  --border: rgba(16,24,40,.12);
+  --border-soft: rgba(16,24,40,.08);
+  --bg: #fff;
+  --bg-soft: #f8fafc;
+  --text: #111827;
+  --muted: #667085;
+  --accent: #9F2141;
+  --shadow-1: 0 10px 30px rgba(16,24,40,.06);
+}
+
+/* ===== Layout de página ===== */
+.page{
+  display: grid;
+  grid-template-rows: auto 1fr;
   gap: 12px;
+  padding: 8px 0;
 }
 
-.header { margin-bottom: 2px; }
-
-.title {
-  font-size: 22px;
-  font-weight: 800;
-  margin: 0;
-  color: #0a0a0a;
-}
-
-.subtitle {
-  margin: 0 0 8px;
-  color: #667085;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid var(--ring, rgba(16, 24, 40, 0.12));
-  border-radius: 12px;
-  padding: 10px;
-}
-
-/* -------- Toolbar -------- */
-.toolbar {
+.headerBar{
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
-  gap: 12px;
-  padding: 6px 6px 10px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.search {
-  flex: 1;
-  border: 1px solid var(--ring, rgba(16, 24, 40, 0.12));
-  border-radius: 10px;
-  padding: 8px 10px;
-  background: #fff;
+/* Tarjeta contenedora de tabla + paginación */
+.card{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-1);
+  padding: 10px;
+  min-width: 0; /* evita overflow en flex container */
 }
 
-.toolsRight {
-  display: flex;
+/* ===== ColumnsMenu (si lo montas en la barra) ===== */
+.columnsMenu{
+  display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.pageSize,
-.pagerBtn {
-  border: 1px solid var(--ring, rgba(16, 24, 40, 0.12));
+.columnsBtn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 6px 8px;
-  background: #fff;
+  background: var(--bg);
+  font-weight: 600;
+  cursor: pointer;
 }
+.columnsBtn:hover{ border-color: var(--accent); box-shadow: 0 0 0 3px rgba(159,33,65,.08); }
 
-.pagerBtn:disabled { opacity: .5; cursor: not-allowed; }
-
-.muted { color: #667085; font-size: 12px; }
-
-/* -------- Detail panel (fila expandida) -------- */
-.detailBox {
-  margin: 8px 10px 12px;
-  padding: 16px 14px;
-  border: 1px solid var(--ring, rgba(16, 24, 40, 0.12));
+.columnsPopover{
+  position: relative;
+}
+.columnsList{
+  position: absolute;
+  right: 0;
+  margin-top: 6px;
+  min-width: 220px;
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  box-shadow: 0 12px 30px rgba(16,24,40,.12);
+  padding: 10px;
+  z-index: 50;
+}
+.columnsItem{
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 8px; border-radius: 8px; cursor: pointer;
+}
+.columnsItem:hover{ background: var(--bg-soft); }
+.columnsItem input{ accent-color: var(--accent); }
+
+/* ===== Paginación (si no tienes un CSS propio) ===== */
+.pager{
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-top: 10px;
+  color: var(--muted); font-size: 13px;
+}
+.pageGroup{
+  display: inline-flex; gap: 6px;
+}
+.pageBtn{
+  min-width: 34px; height: 34px; padding: 0 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; cursor: pointer; font-weight: 600;
+}
+.pageBtn[aria-current="page"],
+.pageBtn.active{
+  background: var(--bg-soft); border-color: var(--accent); color: var(--text);
+  box-shadow: 0 0 0 3px rgba(159,33,65,.08);
+}
+.pageBtn:disabled{ opacity: .5; cursor: not-allowed; }
+
+/* Tamaño selector en paginación */
+.sizeSel{
+  display: inline-flex; gap: 8px; align-items: center;
+}
+.sizeSel select{
+  border:1px solid var(--border); border-radius:10px; padding:6px 10px; background:#fff;
 }
 
-.detailTitle {
-  margin: 0 0 10px;
-  font-weight: 800;
+/* ===== Responsive ===== */
+@media (max-width: 1024px){
+  .headerBar{ gap: 8px; }
+  .columnsList{ right: auto; left: 0; }
+  .pager{ flex-direction: column; align-items: stretch; gap: 8px; }
 }

@@ -1,36 +1,66 @@
+// src/app/(private)/dashboard/asignaciones/components/Table.tsx
 'use client';
 
-import t from '../styles/table.module.css';
+import styles from '../styles/table.module.css';
 import Row from './Row';
-import DetailPanel from './DetailPanel';
+import type { ColumnDef, ColumnId } from './columns';
 
-const COL_WIDTHS = [160,120,140,240,120,160,180,110,160,260,380,140,140] as const;
-const HEADERS = ['Folio','Tipo','Estatus','Asignado a','Asignó','Solicitante','Creado','En adeudo','Monto','No. de oficio','Evidencia','Vence','Tiempo'] as const;
+// 👇 RowProps que comparte Table con Row (sin t/cols/visibleCols)
+type RowSharedProps = Omit<
+  Parameters<typeof Row>[0],
+  't' | 'cols' | 'visibleCols'
+>;
 
-export default function Table({ state }:{ state:any }) {
+export type TableProps = {
+  rows: any[];
+  loading: boolean;
+  columns: ColumnDef[];
+  rowProps: RowSharedProps; // 👈 ya no puede traer t
+};
+
+export default function Table({ rows, loading, columns, rowProps }: TableProps) {
+  const visible = columns.filter(c => c.visible);
+  const colCount = visible.length;
+
   return (
-    <div className={t.tableWrap} role="region" aria-label="Tabla de asignaciones">
-      <table className={t.table}>
-        <colgroup>{COL_WIDTHS.map((w,i)=><col key={i} style={{width:w}} />)}</colgroup>
-        <thead><tr>{HEADERS.map((h,i)=><th key={i}>{h}</th>)}</tr></thead>
+    <div className={styles.tableWrap} role="region" aria-label="Tabla de asignaciones">
+      <table className={styles.table}>
+        <colgroup>
+          {visible.map((c) => (
+            <col key={c.id} style={{ width: c.width }} />
+          ))}
+        </colgroup>
+
+        <thead>
+          <tr>
+            {visible.map((c) => (
+              <th
+                key={c.id}
+                className={c.sticky ? styles.stickyHead : undefined}
+                style={c.sticky ? { left: 0 } : undefined}
+                data-col={c.id}
+              >
+                {c.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+
         <tbody>
-          {state.loading ? (
-            <tr><td colSpan={COL_WIDTHS.length}><div className={t.skeleton}>Cargando…</div></td></tr>
-          ) : state.rows.length ? (
-            state.rows.map((r:any) => (
-              <>
-                <Row key={r.id} row={r} state={state} />
-                {state.openFolio === r.folio && (
-                  <tr className={t.detailRow}>
-                    <td colSpan={COL_WIDTHS.length}>
-                      <DetailPanel loading={state.loadingDetail} detail={state.detail} />
-                    </td>
-                  </tr>
-                )}
-              </>
+          {loading ? (
+            <tr><td colSpan={colCount}>Cargando…</td></tr>
+          ) : rows.length ? (
+            rows.map((t) => (
+              <Row
+                key={t.id}
+                t={t}                               // ✅ solo aquí va t
+                cols={colCount}
+                visibleCols={visible.map(v => v.id as ColumnId)}
+                {...rowProps}                      // ✅ ya NO contiene t
+              />
             ))
           ) : (
-            <tr><td colSpan={COL_WIDTHS.length}><div className={t.empty}>Sin resultados</div></td></tr>
+            <tr><td colSpan={colCount}>Sin resultados</td></tr>
           )}
         </tbody>
       </table>

@@ -1,0 +1,44 @@
+/* Reusa tokens globales definidos en :root (asignaciones.module.css) */
+
+/* Botón/“pill” de tipo (modo display y edit trigger) */
+.typePill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px; height:32px;
+  border-radius:999px; font-weight:600; font-size:12px;
+  border:1px solid var(--border); background:var(--bg-soft); color:var(--text-soft);
+  cursor: pointer;
+}
+.typePill:hover{ border-color: var(--accent); }
+.typePill:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(159,33,65,.14); }
+
+/* Select en modo edición */
+.select{
+  background:#fff; color:var(--text);
+  border:1px solid var(--border); border-radius:10px;
+  padding:6px 10px; font-size:12px; height:32px; max-width:240px;
+}
+.select:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(159,33,65,.12); }
+
+/* Variantes por tipo (usa data-type normalizado por el componente) */
+.typePill[data-type*="finiquito"]{
+  background:#fff7ed; color:#9a3412; border-color:#fed7aa;
+}
+.typePill[data-type*="no-adeudo"]{
+  background:#eef2ff; color:#3730a3; border-color:#c7d2fe;
+}
+.typePill[data-type*="histórico-laboral"],
+.typePill[data-type*="historico-laboral"]{
+  background:#f5f3ff; color:#6d28d9; border-color:#ddd6fe;
+}
+.typePill[data-type*="percepciones-y-deducciones"]{
+  background:#ecfeff; color:#155e75; border-color:#a5f3fc;
+}
+.typePill[data-type*="solicitud"]{
+  background:#e0f2fe; color:#075985; border-color:#7dd3fc;
+}
+
+/* Fallback neutro */
+.typePill[data-type=""],
+.typePill[data-type="—"]{
+  background: var(--bg-soft); color: var(--text-soft);
+}

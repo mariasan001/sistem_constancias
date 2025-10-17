@@ -1,23 +1,62 @@
-.tableWrap { overflow:auto; }
+/* Reusa tokens globales de :root (asignaciones.module.css) */
 
-.table { display:inline-block; min-width:980px; width:auto; border-collapse:separate; border-spacing:0; }
-
-.table thead th {
-  position: sticky; top: 0; z-index: 3;
-  background:#fff; text-align:left; font-size:12.5px; font-weight:800; color:#000;
-  letter-spacing:.02em; padding:8px 3px; border-bottom:1px solid rgba(16,24,40,.08);
-  box-shadow:0 1px 0 rgba(16,24,40,.08), 0 6px 14px rgba(16,24,40,.04);
+.tableWrap{
+  overflow: auto;
+  scrollbar-gutter: stable both-edges;
 }
 
-.table tbody td { padding:13px 14px; border-bottom:1px solid rgba(16,24,40,.08); color:#494747; font-size:12px; background:#fff; }
-.table tbody tr:nth-child(even) { background:#fafafa; }
-.table tbody tr:hover { background:#f2f4f7; }
-
-.table td, .table th { white-space:nowrap; }
-
-.table thead th:first-child, .table tbody td:first-child {
-  position: sticky; left: 0; z-index: 2; background:#fff; box-shadow:1px 0 0 rgba(16,24,40,.08);
+/* Tabla base */
+.table{
+  display: inline-block;
+  width: auto;                 /* respeta colgroup */
+  min-width: 980px;            /* evita colapso en pantallas chicas */
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.skeleton, .empty { padding:18px; color:#667085; }
-.detailRow td { background:#fff; padding:0; }
+/* Header sticky */
+.table thead th{
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--bg);
+  text-align: left;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0b0b0b;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-soft);
+  box-shadow: 0 1px 0 var(--border-soft), 0 6px 14px rgba(16,24,40,.04);
+  white-space: nowrap;
+}
+
+/* Redondeo esquinas superiores */
+.table thead th:first-child { border-top-left-radius: 12px; }
+.table thead th:last-child  { border-top-right-radius: 12px; }
+
+/* Celdas */
+.table tbody td{
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-soft);
+  color: #494747;
+  font-size: 12px;
+  background: var(--bg);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.table tbody tr{ height: 48px; }
+.table tbody tr:hover td{ background: #f7f8fb; }
+
+/* Columna sticky (para headers con prop sticky) */
+.stickyHead{
+  position: sticky;
+  z-index: 4;                  /* por encima de otras celdas */
+  background: var(--bg);
+  box-shadow: 1px 0 0 var(--border-soft), 0 1px 0 var(--border-soft), 0 6px 14px rgba(16,24,40,.04);
+}
+
+/* Estados vacíos/cargando */
+.table tbody td[colspan]{
+  text-align: center;
+  color: var(--muted);
+}

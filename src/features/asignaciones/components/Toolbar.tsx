@@ -1,27 +1,82 @@
 'use client';
-import s from '../styles/asignaciones.module.css';
 
-export default function Toolbar({ q, setQ, page, setPage, size, setSize, total, loading }:{
-  q:string; setQ:(v:string)=>void; page:number; setPage:(n:number)=>void; size:number; setSize:(n:number)=>void; total:number; loading:boolean;
-}) {
-  const pages = Math.max(1, Math.ceil(total / Math.max(1, size)));
+import { useState, useEffect } from 'react';
+import styles from './Toolbar.module.css'; // antes: ../styles/table.module.css
+
+
+// Firma simple (la que usas en la page)
+type PropsSimple = {
+  q: string;
+  onQ: (v: string) => void;
+  onlyUnassigned: boolean;
+  onOnlyUnassigned: (v: boolean) => void;
+  size: number;
+  onSize: (n: number) => void;
+};
+
+// Firma “completa” (la que te marca TS en el error)
+type PropsFull = {
+  q: string;
+  setQ: (v: string) => void;
+  page: number;
+  setPage: (n: number) => void;
+  size: number;
+  setSize: (n: number) => void;
+  total: number;
+  loading: boolean;
+  // opcionales para compat
+  onlyUnassigned?: boolean;
+  onOnlyUnassigned?: (v: boolean) => void;
+};
+
+type Props = PropsSimple | PropsFull;
+
+function isFull(p: Props): p is PropsFull {
+  return (p as any)?.setQ !== undefined;
+}
+
+export default function Toolbar(props: Props) {
+  const q = props.q;
+  const size = props.size;
+  const onlyUnassigned = ('onlyUnassigned' in props ? props.onlyUnassigned : false) ?? false;
+
+  // normaliza handlers
+  const doSearch = (v: string) => isFull(props) ? props.setQ(v) : props.onQ(v);
+  const doSize   = (n: number) => isFull(props) ? props.setSize(n) : props.onSize(n);
+  const doOnly   = (v: boolean) =>
+    isFull(props)
+      ? props.onOnlyUnassigned?.(v) // puede venir undef en firma full
+      : props.onOnlyUnassigned(v);
+
+  const [text, setText] = useState(q);
+  useEffect(() => setText(q), [q]);
+
   return (
-    <div className={s.toolbar}>
+    <div className={styles.toolbar}>
       <input
-        className={s.search}
-        placeholder="Buscar por folio, solicitante…"
-        value={q}
-        onChange={(e)=>setQ(e.target.value)}
+        className={styles.search}
+        placeholder="Buscar por folio, solicitante, oficio…"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && doSearch(text)}
       />
-      <div className={s.toolsRight}>
-        <span className={s.muted}>{loading ? 'Cargando…' : `${total} resultados`}</span>
-        <select value={size} onChange={(e)=>setSize(Number(e.target.value))} className={s.pageSize}>
-          {[10,20,50].map(n=><option key={n} value={n}>{n}/página</option>)}
+      <button className={styles.btn} onClick={() => doSearch(text)}>Buscar</button>
+
+      <label className={styles.chk}>
+        <input
+          type="checkbox"
+          checked={onlyUnassigned}
+          onChange={(e) => doOnly?.(e.target.checked)}
+        />
+        Solo no asignados
+      </label>
+
+      <label className={styles.sizeSel}>
+        Tamaño:
+        <select value={size} onChange={(e) => doSize(Number(e.target.value))}>
+          {[10,20,30,50].map(n => <option key={n} value={n}>{n}</option>)}
         </select>
-        <button className={s.pagerBtn} disabled={page<=0} onClick={()=>setPage(page-1)}>◀</button>
-        <span className={s.muted}>{page+1}/{pages}</span>
-        <button className={s.pagerBtn} disabled={page+1>=pages} onClick={()=>setPage(page+1)}>▶</button>
-      </div>
+      </label>
     </div>
   );
 }

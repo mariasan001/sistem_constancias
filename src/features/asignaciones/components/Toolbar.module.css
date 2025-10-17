@@ -1,0 +1,73 @@
+/* Reusa tokens globales definidos en :root (asignaciones.module.css) */
+.root {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Input de búsqueda */
+.search {
+  flex: 1;
+  min-width: 240px;
+  height: 36px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+}
+.search::placeholder { color: var(--muted); }
+.search:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(159,33,65,.10);
+}
+
+/* Botón buscar */
+.btn {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(159,33,65,.08);
+}
+
+/* Checkbox y selector de tamaño */
+.chk,
+.sizeSel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sizeSel select {
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  padding: 0 10px;
+  color: var(--text);
+}
+.sizeSel select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(159,33,65,.10);
+}
+
+/* Responsive */
+@media (max-width: 840px) {
+  .root { gap: 6px; }
+  .btn { height: 34px; }
+  .search { min-width: 180px; }
+}

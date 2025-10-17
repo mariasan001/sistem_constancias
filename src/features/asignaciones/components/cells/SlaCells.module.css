@@ -1,0 +1,30 @@
+/* Reusa tokens globales definidos en :root (asignaciones.module.css) */
+
+/* Fechas compactas (columna "Vence") */
+.due {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Badge SLA (columna "Tiempo") */
+.badge{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 10px; height:32px;
+  border-radius:999px; font-weight:600; font-size:12px;
+  border:1px solid var(--border); background:var(--bg-soft); color:var(--text);
+  user-select:none;
+}
+
+/* Variantes */
+.badge[data-variant="en-tiempo"]{
+  background:#dcfce7; color:#166534; border-color:#86efac;
+}
+.badge[data-variant="por-vencer"]{
+  background:#fff7ed; color:#9a3412; border-color:#fed7aa;
+}
+.badge[data-variant="vencido"]{
+  background:#fee2e2; color:#b91c1c; border-color:#fecaca;
+}
+.badge[data-variant="desconocido"]{
+  background:#f1f5f9; color:#475569; border-color:#e2e8f0;
+}
